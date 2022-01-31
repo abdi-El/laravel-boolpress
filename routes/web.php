@@ -28,6 +28,7 @@ Route::middleware('auth')
     Route::get('/', 'HomeController@index')->name('home');
 });
 
+// sempre in fondo al file RICORDA
 Route::get('{any?}', function () {
     return view('guests.home');
 })->where('any', '.*'); // premette di reindirezzare alla pagina home peri i guests ogni qual volta che la route non esiste 
