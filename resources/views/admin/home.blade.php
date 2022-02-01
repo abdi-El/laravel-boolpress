@@ -13,10 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    Tu sei:
                     {{-- questi prendono i dati dell'utente loggato --}}
-                    {{Auth::id()}}  
-                    {{Auth::user()->name}}
+                    <h5>L'utente {{Auth::user()->name}} può eseguire azione sui seguenti dati:</h5> 
+                    <a href="{{route('admin.posts.index')}}" class="btn btn-primary"> Fammi vedere</a>
                 </div>
             </div>
         </div>

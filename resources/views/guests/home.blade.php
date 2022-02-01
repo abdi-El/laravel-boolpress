@@ -15,22 +15,30 @@
 
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
+        <header>
+            <nav class="navbar justify-content-end">
+                @if (Route::has('login'))
+                
                     @auth
-                        <a href="{{ route('admin.home') }}">Home</a>
+                        <div class="nav-item ">
+                            <a href="{{ route('admin.home') }}" class="nav-link btn btn-warning">Modica Contenuto</a>
+                        </div>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-
+                        <div class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link btn btn-success mx-2">Accedi</a>
+                        </div>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <div class="nav-item ">
+                                <a href="{{ route('register') }}" class="nav-link btn btn-primary">Registrati</a>
+                            </div>
                         @endif
                     @endauth
-                </div>
+                
             @endif
-            <div id="root"></div>
-            {{-- connessione a js per il from office usando asset() che connette direttamente alla cartella resources --}}
-            <script src="{{asset('js/front.js')}}"></script>
+            </nav>
+        </header>
+        <div id="root"></div>
+        {{-- connessione a js per il from office usando asset() che connette direttamente alla cartella resources --}}
+        <script src="{{asset('js/front.js')}}"></script>
     </body>
 </html>
