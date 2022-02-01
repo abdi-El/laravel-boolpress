@@ -21,7 +21,7 @@
                 
                     @auth
                         <div class="nav-item ">
-                            <a href="{{ route('admin.home') }}" class="nav-link btn btn-warning">Modica Contenuto</a>
+                            <a href="{{ route('admin.home') }}" class="nav-link btn btn-warning">Modifica Contenuto</a>
                         </div>
                     @else
                         <div class="nav-item">

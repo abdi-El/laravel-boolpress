@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str; // permette di fare slug
 use App\Post;
 
 class PostController extends Controller
@@ -47,7 +48,13 @@ class PostController extends Controller
             'author'=>'required|max:100',
             'content'=>'required',
         ]);
-           
+
+        $data = $request->all();
+        $new_post = new Post();
+        $data['slug'] = Str::slug($data['post_title'], '-');
+        $new_post->fill($data);
+        $new_post->save(); // da fare sempre dopo fill
+        return redirect()->route('admin.posts.index')->with('message', 'Created successfully!!');
     }
 
     /**
@@ -58,7 +65,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            abort(404);
+        }
+        else{
+            return view('admin.posts.show', compact('post'));
+        }
     }
 
     /**
@@ -69,7 +82,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            abort(404);
+        }
+        else{
+            return view('admin.posts.edit', compact('post'));
+        }
     }
 
     /**
@@ -81,7 +100,18 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'post_title'=>'required|max:100',
+            'author'=>'required|max:100',
+            'content'=>'required',
+        ]);
+
+        $data = $request->all();
+        $post = Post::find($id);
+        $data['slug'] = Str::slug($data['post_title'], '-');
+        $post->update($data);
+        $post->save(); // da fare sempre dopo fill
+        return redirect()->route('admin.posts.index')->with('message', 'Edit successfull!!');
     }
 
     /**
@@ -92,6 +122,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('message', 'Delete successfull!!');   
     }
 }

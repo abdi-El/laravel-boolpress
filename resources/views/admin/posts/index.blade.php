@@ -4,6 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <a href="{{route('admin.home')}}" class="btn btn-primary my-2"> <-- ritorna alla home</a>
+            @if(session('message'))
+                <div class="alert alert-success">
+                    {{session('message')}}
+                </div>
+            @endif
             <h5>L'utente {{Auth::user()->name}} può eseguire azione sui seguenti dati:</h5> 
             <table class="table">
                 <thead>
@@ -25,6 +31,15 @@
                             <tr>
                                 <td>{{$post->author}}</td>
                                 <td>{{$post->post_title}}</td>
+                                <td colspan='3' class='d-flex'>
+                                    <a href="{{route('admin.posts.show', $post['id'])}}" class="btn btn-success">leggi</a>
+                                    <a href="{{route('admin.posts.edit', $post['id'])}}" class="btn btn-warning mx-2">modifica</a>
+                                    <form action="{{route('admin.posts.destroy', $post['id'])}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">elimina</button> 
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     @else
