@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                   <label for="category_id">Category</label>
-                  @error('post_title') <strong class="text-danger">{{$message}}</strong> @enderror
+                  @error('category_id') <strong class="text-danger">{{$message}}</strong> @enderror
                   <select name="category_id" id="category_id" class="form-control">
                     @foreach ($categories as $cat)
                       <option value="{{$cat->id}}" @if($cat->id == old('category_id', $post->category_id)) selected @endif>{{$cat->name}}</option>

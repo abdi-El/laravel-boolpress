@@ -46,11 +46,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'post_title'=>'required|max:100',
-            'author'=>'required|max:100',
-            'content'=>'required',
-        ]);
+        $request->validate($this->text(), $this->message());
 
         $data = $request->all();
         $new_post = new Post();
@@ -104,11 +100,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'post_title'=>'required|max:100',
-            'author'=>'required|max:100',
-            'content'=>'required',
-        ]);
+        $request->validate($this->text(), $this->message());
 
         $data = $request->all();
         $post = Post::find($id);
@@ -129,5 +121,20 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('message', 'Delete successfull!!');   
+    }
+    private function text(){
+        return ([
+            'post_title'=>'required|max:100',
+            'author'=>'required|max:100',
+            'content'=>'required',
+            'category_id'=>'nullable|exists:categories,id' // exists prende come valore la tabella e la colonna in cui devo cercare
+        ]);
+    }
+    private function message(){
+        return ([
+            'required'=>'the :attribute is necessary',
+            'max'=>'the max length is :max for :attribute',
+            'category_id.exists'=>'the category does not exist',
+        ]);
     }
 }
