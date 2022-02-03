@@ -32,8 +32,17 @@
                 <div class="form-group">
                     <label for="content">Post content</label>
                     @error('content') <strong class="text-danger">{{$message}} </strong>@enderror {{-- @error permette di inserire direttamente l'errore sopra il campo--}}
-                    <textarea name="content" id="content" rows="6" class="form-control" placeholder="Please enter your title here...">{{old('content', $post->content)}}</textarea> {{-- old() permette di mostrare gli input chw sono stati messi --}}
-                  </div>
+                    <textarea name="content" id="content" rows="6" class="form-control" placeholder="Please enter your title here...">{{old('content', $post->content)}}</textarea> {{-- old() permette di mostrare gli input che sono stati messi --}}
+                </div>
+                <div class="form-group">
+                  <label for="category_id">Category</label>
+                  @error('post_title') <strong class="text-danger">{{$message}}</strong> @enderror
+                  <select name="category_id" id="category_id" class="form-control">
+                    @foreach ($categories as $cat)
+                      <option value="{{$cat->id}}" @if($cat->id == old('category_id', $post->category_id)) selected @endif>{{$cat->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
                 <div class="form-group">
                     <button class='btn btn-success form-control mt-3'>Salva modifiche</button>
                 </div>

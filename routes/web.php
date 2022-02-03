@@ -27,6 +27,7 @@ Route::middleware('auth')
 ->group(function() { // tutte le rotte qui dentro donvranno avere l'autenticazione
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('posts', 'PostController');
+    Route::get('/categories/{id}', 'CategoryController@show');
 });
 
 

@@ -20,6 +20,9 @@
                         <th>
                             <strong>Title</strong>
                         </th>
+                        <th>
+                            <strong>Category</strong>
+                        </th>
                         <th colspan="3">
                             actions
                         </th>
@@ -31,6 +34,7 @@
                             <tr>
                                 <td>{{$post->author}}</td>
                                 <td>{{$post->post_title}}</td>
+                                <td><a href="categories/{{$post->category->id}}">{{($post->category->name)}}</a></td>
                                 <td colspan='3' class='d-flex'>
                                     <a href="{{route('admin.posts.show', $post['id'])}}" class="btn btn-success">leggi</a>
                                     <a href="{{route('admin.posts.edit', $post['id'])}}" class="btn btn-warning mx-2">modifica</a>
