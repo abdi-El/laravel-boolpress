@@ -53,5 +53,27 @@
             </table>
         </div>
     </div>
+
+    {{-- i vari tag --}}
+    <div class="my-5">
+        <h3>Ecco i tag più ricercati:</h3>
+        @foreach($tags as $tag)
+            @if($tag->posts->isEmpty())
+                <h5>{{$tag->name}}</h5>
+                <span class='badge badge-primary'>Questo tag non ha nessun post</span>
+            @else
+                <div class='my-4'>
+                    <h5>{{$tag->name}}</h5>
+                    <ul>
+                        @foreach($tag->posts as $post)
+                            <li>
+                                <a href="{{route('admin.posts.show', $post)}}">{{$post['post_title']}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        @endforeach
+    </div>
 </div>
 @endsection

@@ -25,7 +25,7 @@ class CreatePostTagTable extends Migration
             $table->foreign('tag_id')
                     ->references('id')
                     ->on('tags')
-                    ->onDelete('cascade');
+                    ->onDelete('cascade'); // elimina in automatico la connessione con la tabella pivot.
         });
     }
 

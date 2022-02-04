@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str; // permette di fare slug
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -17,10 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {   
-        $categories = Category::all();
+        $tags = Tag::all();
         $posts = Post::all();
         if($posts){
-            return view('admin.posts.index', compact('posts'));
+            return view('admin.posts.index', compact('posts', 'tags'));
         }
         else{
             abort(404);
@@ -35,7 +36,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -53,6 +55,7 @@ class PostController extends Controller
         $data['slug'] = Str::slug($data['post_title'], '-');
         $new_post->fill($data);
         $new_post->save(); // da fare sempre dopo fill
+        $new_post->tags()->attach($data['tags']);
         return redirect()->route('admin.posts.index')->with('message', 'Created successfully!!');
     }
 
@@ -81,13 +84,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $tags = Tag::all();
         $categories = Category::all();
         $post = Post::find($id);
         if(! $post){
             abort(404);
         }
         else{
-            return view('admin.posts.edit', compact('post', 'categories'));
+            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
         }
     }
 
@@ -107,6 +111,12 @@ class PostController extends Controller
         $data['slug'] = Str::slug($data['post_title'], '-');
         $post->update($data);
         $post->save(); // da fare sempre dopo fill
+        if(array_key_exists('tags', $data)){
+            $post->tags()->sync($data['tags']);
+        }
+        else{
+            $post->tags()->detach();
+        }
         return redirect()->route('admin.posts.index')->with('message', 'Edit successfull!!');
     }
 
