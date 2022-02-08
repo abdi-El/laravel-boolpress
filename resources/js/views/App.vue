@@ -14,6 +14,7 @@
     </div> 
         <div class="my-3">
             <button @click="getPosts(getPrev(current))" class="btn btn-primary" :disabled='current == 1'>Prev</button>
+            <span v-for="i in last" :key="`page-${i}`" class="badge p-3 mx-2" :class="current === i ? 'badge-success':'badge-primary'">{{i}}</span>
             <button @click="getPosts(getNext(current))" class="btn btn-primary" :disabled='current == last'>Next</button>
         </div>
   </div> 
@@ -51,11 +52,16 @@ export default {
             return(this.current);
         }
         return this.current;
+    },
+    seeNow(number){
+        if(number == this.current){
+            return true;
+        }
+        return false;
     }
   },
   created(){
       this.getPosts()
-
   },
 };
 </script>

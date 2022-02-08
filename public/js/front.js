@@ -1931,6 +1931,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
@@ -1968,6 +1969,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.current;
+    },
+    seeNow: function seeNow(number) {
+      if (number == this.current) {
+        return true;
+      }
+
+      return false;
     }
   },
   created: function created() {
@@ -2488,35 +2496,52 @@ var render = function () {
       0
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "my-3" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { disabled: _vm.current == 1 },
-          on: {
-            click: function ($event) {
-              _vm.getPosts(_vm.getPrev(_vm.current))
+    _c(
+      "div",
+      { staticClass: "my-3" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.current == 1 },
+            on: {
+              click: function ($event) {
+                _vm.getPosts(_vm.getPrev(_vm.current))
+              },
             },
           },
-        },
-        [_vm._v("Prev")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { disabled: _vm.current == _vm.last },
-          on: {
-            click: function ($event) {
-              _vm.getPosts(_vm.getNext(_vm.current))
+          [_vm._v("Prev")]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.last, function (i) {
+          return _c(
+            "span",
+            {
+              key: "page-" + i,
+              staticClass: "badge p-3 mx-2",
+              class: _vm.current === i ? "badge-success" : "badge-primary",
+            },
+            [_vm._v(_vm._s(i))]
+          )
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.current == _vm.last },
+            on: {
+              click: function ($event) {
+                _vm.getPosts(_vm.getNext(_vm.current))
+              },
             },
           },
-        },
-        [_vm._v("Next")]
-      ),
-    ]),
+          [_vm._v("Next")]
+        ),
+      ],
+      2
+    ),
   ])
 }
 var staticRenderFns = []
