@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// porta alla api posts
+//namespace serve per portarlo alla cartella del controller e grpup serve a raggruppare tutte le rotte con namespace uguale
+Route::namespace('Api')->group(function (){ 
+    Route::get('/post', 'PostController@index');
 });
