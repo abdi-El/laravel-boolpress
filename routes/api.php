@@ -22,4 +22,5 @@ use Illuminate\Support\Facades\Route;
 //namespace serve per portarlo alla cartella del controller e grpup serve a raggruppare tutte le rotte con namespace uguale
 Route::namespace('Api')->group(function (){ 
     Route::get('/post', 'PostController@index');
+    Route::get('/post/{id}', 'PostController@show');
 });
