@@ -16,6 +16,9 @@
             <h5 class="mt-3"> <strong>Contenuto:</strong></h5>
             <p class="border border-primary rounded p-1">{{$post->content}}</p>
         </div>
+        @if($post->cover)
+            <img  class='img-fluid' src="{{asset('storage/'.$post->cover)}}" alt="aaaa">
+        @endif
     </div>
 </div>
 @endsection

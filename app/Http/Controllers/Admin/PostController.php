@@ -8,6 +8,7 @@ use Illuminate\Support\Str; // permette di fare slug
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -51,6 +52,7 @@ class PostController extends Controller
         $request->validate($this->text(), $this->message());
 
         $data = $request->all();
+        $data['cover'] = storage::put('file-uploaded', $data['cover']);
         $new_post = new Post();
         $data['slug'] = Str::slug($data['post_title'], '-');
         $new_post->fill($data);
@@ -109,6 +111,14 @@ class PostController extends Controller
         $data = $request->all();
         $post = Post::find($id);
         $data['slug'] = Str::slug($data['post_title'], '-');
+        // modifica cover
+        if(array_key_exists('cover', $data)){
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+            $data['cover'] = storage::put('file-uploaded', $data['cover']);
+        }
+
         $post->update($data);
         $post->save(); // da fare sempre dopo fill
         if(array_key_exists('tags', $data)){
@@ -137,7 +147,8 @@ class PostController extends Controller
             'post_title'=>'required|max:100',
             'author'=>'required|max:100',
             'content'=>'required',
-            'category_id'=>'nullable|exists:categories,id' // exists prende come valore la tabella e la colonna in cui devo cercare
+            'category_id'=>'nullable|exists:categories,id', // exists prende come valore la tabella e la colonna in cui devo cercare
+            'cover'=>'nullable|file|mimes:jpeg,bmp,png,jpg'
         ]);
     }
     private function message(){

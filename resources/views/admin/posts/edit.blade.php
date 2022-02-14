@@ -16,7 +16,7 @@
                   </ul>
               </div>
             @endif
-            <form action='{{route('admin.posts.update' , $post['id'])}}' method='POST'>
+            <form action='{{route('admin.posts.update' , $post['id'])}}' method='POST' enctype='multipart/form-data'>
                 @method('PUT')
                 @csrf 
                 <div class="form-group">
@@ -51,6 +51,13 @@
                   @if ($errors->any() && in_array($tag->id,old('tags'))) checked @elseif(!$errors->any() && $post->tags->contains($tag->id)) checked @endif>
                   <label for="tag-{{$loop->iteration}}" class="mr-3">{{$tag->name}}</label>
                   @endforeach
+                </div>
+
+                {{-- Cover --}}
+                <div class="form-group">
+                  <label for="cover">Post content</label>
+                  @error('cover') <strong class="text-danger">{{$message}} </strong>@enderror {{-- @error permette di inserire direttamente l'errore sopra il campo--}}
+                 <input type="file" id="cover" name="cover"> {{-- old() permette di mostrare gli input chw sono stati messi --}}
                 </div>
 
                 <div class="form-group">

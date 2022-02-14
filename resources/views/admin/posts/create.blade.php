@@ -16,7 +16,7 @@
                   </ul>
               </div>
             @endif
-            <form action='{{route('admin.posts.store')}}' method='POST'>
+            <form action='{{route('admin.posts.store')}}' method='POST' enctype='multipart/form-data'>
                 @csrf 
                 {{-- author --}}
                 <div class="form-group">
@@ -60,6 +60,14 @@
                   @endforeach
                 </div>
 
+                {{-- Cover --}}
+                <div class="form-group">
+                  <label for="cover">Post content</label>
+                  @error('cover') <strong class="text-danger">{{$message}} </strong>@enderror {{-- @error permette di inserire direttamente l'errore sopra il campo--}}
+                 <input type="file" id="cover" name="cover"> {{-- old() permette di mostrare gli input chw sono stati messi --}}
+                </div>
+
+                {{-- submit button --}}
                 <div class="form-group">
                     <button class='btn btn-success form-control mt-3'>Create it!!</button>
                 </div>
